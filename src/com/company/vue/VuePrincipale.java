@@ -17,6 +17,7 @@ public class VuePrincipale extends JFrame implements ActionListener {
     private JPanel panelMenu = new JPanel();
     private JPanel panelLister = new JPanel();
     private JPanel panelListerStocks = new JPanel();
+    private JPanel panelCommande = new JPanel();
 
     /**************
      * Objets du panel Menu
@@ -43,6 +44,15 @@ public class VuePrincipale extends JFrame implements ActionListener {
 
     /**********************************************/
 
+    /**************
+     * Objets du panel Lister
+     ********/
+
+    private JTextField jfID = new JTextField();
+    private JButton btEditer = new JButton("Editer");
+    private JButton btArchiver = new JButton("Archiver");
+
+
     public VuePrincipale(User unUser) {
         user = unUser;
 
@@ -53,7 +63,7 @@ public class VuePrincipale extends JFrame implements ActionListener {
 
         // placement du panel Menu
         this.panelMenu.setBounds(0, 0, 120, 550);
-        this.panelMenu.setBackground(new Color(44, 62, 80));
+        //this.panelMenu.setBackground(new Color(44, 62, 80));
         this.panelMenu.setLayout(new GridLayout(8, 1));
         this.panelMenu.add(new JLabel());
         this.panelMenu.add(new JLabel("Le Menu"));
@@ -67,15 +77,22 @@ public class VuePrincipale extends JFrame implements ActionListener {
         // placement objets panel lister
         this.panelLister.setBounds(150, 20, 620, 500);
         this.panelLister.setLayout(null);
-        this.panelLister.setBackground(new Color(44, 62, 80));
+        //this.panelLister.setBackground(new Color(44, 62, 80));
         this.lbTitre.setBounds(250, 30, 200, 20);
         this.panelLister.add(this.lbTitre);
         this.btFermer.setBounds(265, 400, 80, 20);
         this.panelLister.add(this.btFermer);
+        this.panelLister.add(jfID);
+        this.panelLister.add(btArchiver);
+        this.panelLister.add(btEditer);
+        this.panelCommande.setBounds(150, 20, 620, 500);
+        this.jfID.setBounds(180, 400, 50, 20);
+        this.btEditer.setBounds(260, 400, 80, 20);
+        this.btArchiver.setBounds(350, 400, 80, 20);
 
         this.panelListerStocks.setBounds(150, 20, 620, 500);
         this.panelListerStocks.setLayout(null);
-        this.panelListerStocks.setBackground(new Color(44, 62, 80));
+        //this.panelListerStocks.setBackground(new Color(44, 62, 80));
         this.lbTitre.setBounds(250, 30, 200, 20);
         this.panelListerStocks.add(this.lbTitre);
         this.btFermer.setBounds(265, 435, 80, 20);
@@ -98,9 +115,11 @@ public class VuePrincipale extends JFrame implements ActionListener {
 
         this.panelLister.setVisible(false);
         this.panelListerStocks.setVisible(false);
+        this.panelCommande.setVisible(false);
 
         this.add(this.panelLister);
         this.add(this.panelListerStocks);
+        this.add(this.panelCommande);
 
         // rendre les boutons ecoutables
         this.btLister.addActionListener(this);
@@ -108,6 +127,8 @@ public class VuePrincipale extends JFrame implements ActionListener {
         this.btQuitter.addActionListener(this);
         this.btListerStocks.addActionListener(this);
         this.btEnregistrer.addActionListener(this);
+        this.btEditer.addActionListener(this);
+        this.btArchiver.addActionListener(this);
 
         this.setVisible(true);
     }
@@ -116,6 +137,7 @@ public class VuePrincipale extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btFermer) {
             this.panelLister.setVisible(false);
+            this.panelListerStocks.setVisible(false);
         } else if (e.getSource() == this.btLister) {
             // construction de la Jtable
             String titres[] = {"ID", "Date", "Menu"};
@@ -153,6 +175,7 @@ public class VuePrincipale extends JFrame implements ActionListener {
             // construction de la Jtable
             String[] titres = {"id", "Menu", "Quantités"};
             LinkedList<Stocks> Stocks = ModeleStocks.selectAll(user);
+            Order unModeleOrder = new Order();
             Object donnees[][] = new Object[Stocks.size()][3];
             int i = 0;
             for (Stocks unStocks : Stocks) {
@@ -179,6 +202,35 @@ public class VuePrincipale extends JFrame implements ActionListener {
             unModeleStocks.edit(user.getRestaurant_id(), idProduit, qte);
         } else if (e.getSource() == this.btQuitter) {
             this.dispose();
+        } else if (e.getSource() == this.btArchiver) {
+            int id = 0;
+            id = Integer.parseInt(this.jfID.getText());
+            ModeleOrder.inactivate(id);
+        } else if (e.getSource() == this.btEditer) {
+
+            // construction de la Jtable
+            String[] titres = {"Date achat", "Prix", "Archiver/Activer"};
+            LinkedList<Order> Orders = ModeleOrder.selectAll(user);
+            Object donnees[][] = new Object[Orders.size()][3];
+            int i = 0;
+            for (Order unOrder : Orders) {
+                donnees[i][0] = unOrder.getDate();
+                donnees[i][1] = unOrder.getPrix();
+                donnees[i][2] = unOrder.getActive();
+                i++;
+            }
+            this.laTable = new JTable(donnees, titres);
+
+            // affichage de la table dans une scroll
+            JScrollPane uneScroll = new JScrollPane(this.laTable);
+            uneScroll.setBounds(20, 65, 550, 300);
+            uneScroll.setVisible(true);
+            this.panelCommande.add(uneScroll);
+
+            this.panelCommande.setVisible(true);
+
+            this.panelLister.setVisible(false);
+            this.panelListerStocks.setVisible(false);
         }
     }
 }

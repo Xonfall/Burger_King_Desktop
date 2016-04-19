@@ -53,8 +53,8 @@ public class ModeleStocks {
                 int qte = unRes.getInt("qte");
                 unStocks = new Stocks(id, product_id, restaurant_id, qte);
                 uneListe.add(unStocks);
-                unStat.close();
             }
+            unStat.close();
             uneBDD.seDeconnecter();
         }
         catch(SQLException exp) {

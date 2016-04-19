@@ -16,7 +16,8 @@ public class ModeleOrder {
 		String requete = "Select * from orders "
 				+ "where active='1' and restaurant_id='" 
 				+ user.getRestaurant_id() +"' ORDER BY date ASC ;";
-		BDD uneBDD = new BDD("localhost", "cake_burgerking", "root", "");
+        System.out.println(requete);
+        BDD uneBDD = new BDD("localhost", "cake_burgerking", "root", "");
 		Order uneOrder = null;
 		LinkedList<Order> uneListe = new LinkedList<Order>();
 		try
@@ -43,16 +44,15 @@ public class ModeleOrder {
 		return uneListe;
 	}
 	
-	public static int inactivate(Order order){
-		String requete = "Update orders set active = '0' where id='" + order.getId() + "';";
-		BDD uneBDD = new BDD("localhost", "cake_burgerking", "root", "");
+	public static int inactivate(int id){
+		String requete = "Update orders set active = '0' where id='" + id + "';";
+        BDD uneBDD = new BDD("127.0.0.1", "cake_burgerking", "root", "");
 		try
 		{
 			uneBDD.seConnecter();
 			Statement unStat = uneBDD.getMaConnection().createStatement();
-			unStat.executeQuery(requete);
+			unStat.execute(requete);
 			uneBDD.seDeconnecter();
-			return 1;
 		}
 		catch(SQLException exp){
 			JOptionPane.showMessageDialog(null, "Requete : " + requete, "Erreur", JOptionPane.OK_OPTION);
