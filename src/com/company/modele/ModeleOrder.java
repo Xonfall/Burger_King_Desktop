@@ -64,7 +64,7 @@ public class ModeleOrder {
                 String adresse = unRes.getString("adresse");
                 float prix = unRes.getFloat("prix");
                 String date = unRes.getString("date");
-                uneOrder = new Order(id, user.getRestaurant_id(), town_id, user_id, cp, adresse, prix, date, 1);
+                uneOrder = new Order(id, user.getRestaurant_id(), town_id, user_id, cp, adresse, prix, date, 0);
                 uneListe.add(uneOrder);
             }
             uneBDD.seDeconnecter();
