@@ -138,6 +138,7 @@ public class VuePrincipale extends JFrame implements ActionListener {
         if (e.getSource() == this.btFermer) {
             this.panelLister.setVisible(false);
             this.panelListerStocks.setVisible(false);
+            this.panelCommande.setVisible(false);
         } else if (e.getSource() == this.btLister) {
             // construction de la Jtable
             String titres[] = {"ID", "Date", "Menu"};
@@ -171,6 +172,7 @@ public class VuePrincipale extends JFrame implements ActionListener {
             this.panelLister.add(uneScroll);
             this.panelLister.setVisible(true);
             this.panelListerStocks.setVisible(false);
+            this.panelCommande.setVisible(false);
         } else if (e.getSource() == this.btListerStocks) {
             // construction de la Jtable
             String[] titres = {"id", "Menu", "Quantités"};
@@ -194,6 +196,7 @@ public class VuePrincipale extends JFrame implements ActionListener {
 
             this.panelListerStocks.setVisible(true);
             this.panelLister.setVisible(false);
+            this.panelCommande.setVisible(false);
         } else if (e.getSource() == this.btEnregistrer) {
             int idProduit, qte = 0;
             ModeleStocks unModeleStocks = new ModeleStocks();
