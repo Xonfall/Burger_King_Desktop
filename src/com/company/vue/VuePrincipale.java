@@ -86,6 +86,7 @@ public class VuePrincipale extends JFrame implements ActionListener {
         this.panelLister.add(btArchiver);
         this.panelLister.add(btEditer);
         this.panelCommande.setBounds(150, 20, 620, 500);
+        this.panelCommande.setLayout(null);
         this.jfID.setBounds(180, 400, 50, 20);
         this.btEditer.setBounds(260, 400, 80, 20);
         this.btArchiver.setBounds(350, 400, 80, 20);
