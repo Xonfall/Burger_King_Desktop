@@ -49,11 +49,11 @@ public class VueConnexion extends JFrame implements ActionListener {
         if (e.getSource() == btnSeConnecter) {
             String username = this.tfUsername.getText();
             char[] password = this.tfPassword.getPassword();
-            String a = String.valueOf(password);
-            JOptionPane.showMessageDialog(null, a);
+            String champPassword = String.valueOf(password);
+            //JOptionPane.showMessageDialog(null, champPassword);
             
             User unUser = null;
-            unUser = ModeleUser.verifConnexion(username, a);
+            unUser = ModeleUser.verifConnexion(username, champPassword);
             if(unUser == null){
             	JOptionPane.showMessageDialog(null, "Erreur de saisie");
             } else {

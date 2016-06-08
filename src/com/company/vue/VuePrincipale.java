@@ -62,7 +62,7 @@ public class VuePrincipale extends JFrame implements ActionListener {
         this.setLayout(null);
 
         // placement du panel Menu
-        this.panelMenu.setBounds(0, 0, 120, 550);
+        this.panelMenu.setBounds(20, 0, 120, 550);
         //this.panelMenu.setBackground(new Color(44, 62, 80));
         this.panelMenu.setLayout(new GridLayout(8, 1));
         this.panelMenu.add(new JLabel());
@@ -209,8 +209,8 @@ public class VuePrincipale extends JFrame implements ActionListener {
         } else if (e.getSource() == this.btEditer) {
 
             // construction de la Jtable
-            String[] titres = {"Date achat", "Prix", "Archiver/Activer"};
-            LinkedList<Order> Orders = ModeleOrder.selectAll(user);
+            String[] titres = {"Date achat", "Prix", "Archiver"};
+            LinkedList<Order> Orders = ModeleOrder.selectInactivate(user);
             Object donnees[][] = new Object[Orders.size()][3];
             int i = 0;
             for (Order unOrder : Orders) {
